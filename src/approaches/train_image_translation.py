@@ -42,7 +42,7 @@ class Image_translation_block():
             self.G = ResUnetGenerator(input_nc=6, output_nc=3, num_downs=6, use_dropout=False)
 
         if (opt_parser.load_G_name != ''):
-            ckpt = torch.load(opt_parser.load_G_name)
+            ckpt = torch.load(opt_parser.load_G_name, map_location=torch.device(device))
             try:
                 self.G.load_state_dict(ckpt['G'])
             except:
@@ -107,7 +107,7 @@ class Image_translation_block():
             self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
             model_ft = models.FAN(HG_BLOCKS, END_RELU, GRAY_SCALE, NUM_LANDMARKS)
 
-            checkpoint = torch.load(PRETRAINED_WEIGHTS)
+            checkpoint = torch.load(PRETRAINED_WEIGHTS, map_location=torch.device(device))
             if 'state_dict' not in checkpoint:
                 model_ft.load_state_dict(checkpoint)
             else:

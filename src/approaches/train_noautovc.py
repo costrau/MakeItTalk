@@ -86,7 +86,7 @@ class Speaker_aware_branch():
 
         if (opt_parser.load_a2l_G_name.split('/')[-1] != ''):
             model_dict = self.G.state_dict()
-            ckpt = torch.load(opt_parser.load_a2l_G_name)
+            ckpt = torch.load(opt_parser.load_a2l_G_name, map_location=torch.device(device))
             pretrained_dict = {k: v for k, v in ckpt['G'].items()
                                if 'out.' not in k and 'out_pos_1.' not in k}
             model_dict.update(pretrained_dict)

@@ -64,7 +64,7 @@ class Audio2landmark_model():
                                       bidirectional=False, drop_out=opt_parser.drop_out)
 
         if(opt_parser.load_a2l_C_name.split('/')[-1] != ''):
-            ckpt = torch.load(opt_parser.load_a2l_C_name)
+            ckpt = torch.load(opt_parser.load_a2l_C_name,  map_location=torch.device(device))
             self.C.load_state_dict(ckpt['model_g_face_id'])
             print('======== LOAD PRETRAINED CONTENT BRANCH MODEL {} ========='.format(opt_parser.load_a2l_C_name))
         self.C.to(device)
